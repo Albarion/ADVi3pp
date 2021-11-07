@@ -94,7 +94,7 @@
 #define HEATER_0_PIN            4  // PG5 / PWM4
 #define HEATER_BED_PIN          3  // PE5 / PWM3
 
-#define FAN_PIN                 5  // PE3 / PWM5
+#define FAN_PIN                 45  // PE3 / PWM5
 
 #define FIL_RUNOUT_PIN          36 // PC1 / A9
 
