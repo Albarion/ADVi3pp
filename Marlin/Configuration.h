@@ -1220,7 +1220,7 @@
  *     O-- FRONT --+
  */
 // @advi3++: By default, Teaching Tech Left support offsets.
-#define NOZZLE_TO_PROBE_OFFSET { -24.00, -38.00, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { +10.00, -38.00, -2.10 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
@@ -1427,13 +1427,13 @@
 
 // @section machine
 
-// The size of the printable area
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+// The size of the print bed
+#define X_BED_SIZE 210
+#define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 // @advi3++: The bed dimensions of Wanhao i3 Plus is (officially) 200x200x180
-#define X_MIN_POS -2.0
+#define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
