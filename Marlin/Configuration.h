@@ -1224,7 +1224,7 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 20
+#define PROBING_MARGIN 5
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (100*60) // @advi3++
@@ -1434,7 +1434,7 @@
 // Travel limits (mm) after homing, corresponding to endstop positions.
 // @advi3++: The bed dimensions of Wanhao i3 Plus is (officially) 200x200x180
 #define X_MIN_POS 0
-#define Y_MIN_POS 0
+#define Y_MIN_POS -60
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
