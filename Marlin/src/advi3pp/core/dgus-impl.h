@@ -134,9 +134,9 @@ inline bool OutFrame<Param, cmd>::write_word_parameter() const
 // --------------------------------------------------------------------
 
 template<typename Param, Command cmd>
-bool ReadOutFrame<Param, cmd>::write(uint8_t nb_bytes)
+bool ReadOutFrame<Param, cmd>::write(uint8_t nb_elements)
 {
-    return Parent::write_header(1) && Parent::write_byte_data(nb_bytes);
+    return Parent::write_header(1) && Parent::write_byte_data(nb_elements);
 }
 
 // --------------------------------------------------------------------
@@ -156,17 +156,31 @@ bool WriteOutFrame<Param, cmd>::write_word(uint16_t value)
 }
 
 template<typename Param, Command cmd>
-template<size_t N>
-bool WriteOutFrame<Param, cmd>::write_bytes(const adv::array<uint8_t , N>& data)
+bool WriteOutFrame<Param, cmd>::write_bytes_data(const uint8_t *first, size_t size)
 {
-    return Parent::write_header(data.size()) && Parent::write_bytes_data(data.data(), data.size());
+    return Parent::write_header(size) && Parent::write_bytes_data(first, size);
 }
 
 template<typename Param, Command cmd>
-template<size_t N>
-bool WriteOutFrame<Param, cmd>::write_words(const adv::array<uint16_t , N>& data)
+bool WriteOutFrame<Param, cmd>::write_words_data(const uint16_t *first, size_t size) {
+    return Parent::write_header(size * 2) && Parent::write_words_data(first, size);
+}
+
+template<typename Param, Command cmd>
+template<typename... T>
+bool WriteOutFrame<Param, cmd>::write_bytes(T... args)
 {
-    return Parent::write_header(N * 2) && Parent::write_words_data(data.data(), N);
+    const auto size = sizeof...(args);
+    const adv::array<uint8_t, size> data = {static_cast<uint8_t>(args)...};
+    return write_bytes_data(data.data(), size);
+}
+
+template<typename Param, Command cmd>
+template<typename... T>
+bool WriteOutFrame<Param, cmd>::write_words(T... args) {
+    const auto size = sizeof...(args);
+    const adv::array<uint16_t, size> data = {static_cast<uint16_t>(args)...};
+    return write_words_data(data.data(), size);
 }
 
 // --------------------------------------------------------------------
@@ -302,9 +316,9 @@ bool InFrame<Param, cmd, mode>::check_word_parameter() const
 // --------------------------------------------------------------------
 
 template<typename Param, Command cmd, ReceiveMode mode>
-bool OutInFrame<Param, cmd, mode>::send_receive(uint8_t nb_bytes)
+bool OutInFrame<Param, cmd, mode>::send_receive(uint8_t nb_elements)
 {
-    if(!ReadOutFrame<Param, cmd>{Parent::parameter_}.write(nb_bytes))
+    if(!ReadOutFrame<Param, cmd>{Parent::parameter_}.write(nb_elements))
         return false;
     return Parent::receive();
 }

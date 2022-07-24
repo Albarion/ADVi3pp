@@ -5,11 +5,8 @@ Create a new release.
 
 if [[ "$OSTYPE" != "darwin"* ]]; then echo "Work only on macOS, sorry" ; exit 1; fi
 
-function pause(){
-   read -r -s -k "?$*"$'\n'
-}
-
-version="5.1.1"
+. ./functions.sh
+. ./version.sh
 
 scripts="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ret=$?; if [[ $ret != 0 ]]; then exit $ret; fi
@@ -29,24 +26,43 @@ echo "======================================"
 echo
 echo "BE SURE YOU HAVE CHANGED:"
 echo "- CHANGELOG.md"
-echo "- advbumpversion --allow-dirty --no-commit --no-tag release"
+echo "- cd .. ; advbumpversion --allow-dirty --no-commit --no-tag release ; cd Scripts"
 echo "- User Manual if necessary"
 echo
 pause 'Press any key to continue or Ctrl-C to abort...'
 
 sudo -v
 
+echo
+echo "***** Check that required commands do exist"
+if ! [ -x "$(command -v git)" ]; then
+  echo 'Error: git is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v convert)" ]; then
+  echo 'Error: imagemagick is not installed, use: brew install imagemagick' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v mkfs.fat)" ]; then
+  echo 'Error: dosfstools is not installed, use: brew install dosfstools' >&2
+  exit 1
+fi
+
+echo
+echo "***** Remove previous files if any"
 rm -rf "${release:?}/*"
 
 echo
 echo "***** Create SD image and SD raw zip file..."
-./create-sd-image.sh "${version}"
+./create-sd-image.sh
 ret=$?; if [[ $ret != 0 ]]; then exit $ret; fi
 
 echo
 echo "***** Generate other microSD images..."
-./create-sd-calibration-image.sh "${version}"
-./create-sd-reset-image.sh "${version}"
+./create-sd-calibration-image.sh
+./create-sd-reset-image.sh
 
 echo
 echo "***** Compile Mainboard firmwares..."

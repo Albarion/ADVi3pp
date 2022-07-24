@@ -254,6 +254,16 @@ class SdBaseFile {
   uint32_t fileSize() const { return fileSize_; }
 
   /**
+   * \return The written date of a file or directory. @advi3++
+   */
+  uint32_t writeDate() const { return write_date_; }
+
+  /**
+   * \return The written time of a file or directory. @advi3++
+   */
+  uint32_t writeTime() const { return write_time_; }
+
+  /**
    * \return The first cluster number for a file or directory.
    */
   uint32_t firstCluster() const { return firstCluster_; }
@@ -365,6 +375,8 @@ class SdBaseFile {
   uint32_t  fileSize_;      // file size in bytes
   uint32_t  firstCluster_;  // first cluster of file
   SdVolume  *vol_;          // volume where file is located
+  uint16_t  write_date_;    // @advi3++
+  uint16_t  write_time_;    // @advi3++
 
   /**
    * EXPERIMENTAL - Don't use!
@@ -377,8 +389,26 @@ class SdBaseFile {
   dir_t* cacheDirEntry(uint8_t action);
   int8_t lsPrintNext(uint8_t flags, uint8_t indent);
   static bool make83Name(const char *str, uint8_t *name, const char **ptr);
-  bool mkdir(SdBaseFile *parent, const uint8_t dname[11]);
-  bool open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t oflag);
+  bool mkdir(SdBaseFile *parent, const uint8_t dname[11]
+    OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
+  );
+  bool open(SdBaseFile *dirFile, const uint8_t dname[11]
+      OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
+    , uint8_t oflag
+  );
   bool openCachedEntry(uint8_t cacheIndex, uint8_t oflags);
   dir_t* readDirCache();
+
+  // Long Filename create/write support
+  #if ENABLED(LONG_FILENAME_WRITE_SUPPORT)
+    static bool isDirLFN(const dir_t* dir);
+    static bool isDirNameLFN(const char *dirname);
+    static bool parsePath(const char *str, uint8_t *name, uint8_t *lname, const char **ptr);
+    /**
+     * Return the number of entries needed in the FAT for this LFN
+     */
+    static inline uint8_t getLFNEntriesNum(const char *lname) { return (strlen(lname) + 12) / 13; }
+    static void getLFNName(vfat_t *vFatDir, char *lname, uint8_t startOffset);
+    static void setLFNName(vfat_t *vFatDir, char *lname, uint8_t lfnSequenceNumber);
+  #endif
 };

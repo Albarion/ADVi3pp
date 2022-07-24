@@ -31,15 +31,8 @@ BLTouchTesting bltouch_testing;
 
 #ifdef BLTOUCH
 
-void reset_bltouch_command()
-{
-    core.inject_commands(F("M280 P0 S160"));
-}
-
-void selftest_bltouch_command()
-{
-    core.inject_commands(F("M280 P0 S120"));
-}
+void reset_bltouch_command()    { core.inject_commands(F("M280 P0 S160")); }
+void selftest_bltouch_command() { core.inject_commands(F("M280 P0 S120")); }
 
 
 //! Execute acommand
@@ -73,6 +66,18 @@ Page BLTouchTesting::do_prepare_page()
     pages.save_forward_page();
     step1();
     return Page::BLTouchTesting1;
+}
+
+void BLTouchTesting::do_back_command()
+{
+    reset_bltouch_command();
+    Parent::do_back_command();
+}
+
+void BLTouchTesting::do_save_command()
+{
+    // Do not call parent, there nothing to save
+    pages.show_forward_page();
 }
 
 void BLTouchTesting::step1()
@@ -132,14 +137,16 @@ void BLTouchTesting::step3()
 
 void BLTouchTesting::step3yes()
 {
-    set_bits(ok_, Wires::White | Wires::Black);
+    if(digitalRead(Z_MIN_PIN) == HIGH)
+      set_bits(ok_, Wires::White | Wires::Black);
+    else
+      status.set(F("Are white and black wires inverted?"));
     step4();
 }
 
 void BLTouchTesting::step3no()
 {
-    clear_bits(ok_, Wires::Orange);
-    status.set(F("Problem with White/Black wiring"));
+    status.set(F("Problem with white or black wires"));
     step4();
 }
 
@@ -161,14 +168,13 @@ void BLTouchTesting::step4()
     if(brown == 1 && red == 1 && orange == 1 && black == 1 && white == 1)
         status.set(F("No problem detected with BLTouch"));
 
-    WriteRamRequest{Variable::Value0}.write_words(adv::array<uint16_t, 5>
-    {
-        static_cast<uint16_t>(brown),
-        static_cast<uint16_t>(red),
-        static_cast<uint16_t>(orange),
-        static_cast<uint16_t>(black),
-        static_cast<uint16_t>(white)
-    });
+    WriteRamRequest{Variable::Value0}.write_words(
+        brown,
+        red,
+        orange,
+        black,
+        white
+    );
 
     pages.show(Page::BLTouchTesting4);
 }

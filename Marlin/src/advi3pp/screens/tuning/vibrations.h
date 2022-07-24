@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include "../../lib/ADVstd/bitmasks.h"
 #include "../core/screen.h"
 
 namespace ADVi3pp {
@@ -31,10 +30,38 @@ struct Vibrations: Screen<Vibrations>
 private:
     bool do_dispatch(KeyValue key_value);
     Page do_prepare_page();
+    void do_back_command();
 
 private:
+    enum class Speed { Slow, Medium, Fast};
+
+    void homing();
+
+    void x_command();
+    void y_command();
+    void xy_command();
+    void yx_command();
+    void z_command();
+
+    void move_x();
+    void move_y();
+    void move_start_xy();
+    void move_start_yx();
+    void move_xy();
+    void move_start_z();
+    void move_z();
+    void move_finished();
+    void move_finished2();
+
+    bool get_values(int &min, int &max);
+    void set_values();
+    int get_xy_speed();
+    int get_z_speed();
 
     friend Parent;
+
+private:
+    Speed speed_ = Speed::Medium;
 };
 
 extern Vibrations vibrations;

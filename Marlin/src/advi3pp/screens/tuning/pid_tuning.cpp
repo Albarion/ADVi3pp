@@ -22,6 +22,7 @@
 #include "pid_tuning.h"
 #include "../../core/core.h"
 #include "../../core/dgus.h"
+#include "../../core/pid.h"
 #include "../../core/status.h"
 #include "../settings/pid_settings.h"
 #include "../print/temperatures.h"
@@ -64,11 +65,7 @@ Page PidTuning::do_prepare_page()
 //! Send the current data to the LCD panel.
 void PidTuning::send_data()
 {
-    WriteRamRequest{Variable::Value0}.write_words(adv::array<uint16_t, 2>
-    {
-        temperature_,
-        kind_ != TemperatureKind::Hotend
-    });
+    WriteRamRequest{Variable::Value0}.write_words(temperature_, kind_ != TemperatureKind::Hotend);
 }
 
 //! Select the hotend PID
@@ -167,14 +164,12 @@ void PidTuning::on_finished(ExtUI::result_t result)
 
     auto message = get_message(result);
     status.set(message);
-    Log::log() << message << Log::endl();
 	
     ExtUI::setTargetFan_percent(0, ExtUI::FAN0);
     if(result != ExtUI::PID_DONE)
         return;
 
-    pid_settings.add_pid(kind_, temperature_);
-
+    pid.add_pid(kind_, temperature_);
     pid_settings.show();
 }
 

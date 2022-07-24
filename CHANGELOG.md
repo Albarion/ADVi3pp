@@ -1,5 +1,35 @@
 # ADVi3++ Changelog
 
+## 5.4.0 (2022-07-17)
+
+* **#292** - [LCD and beeper settings are not saved or taken into account](https://github.com/andrivet/ADVi3pp/issues/292)
+
+## 5.4.0 (2022-07-15)
+
+* **#291** - [When pressing on a move button, it continues for a while after the button is released](https://github.com/andrivet/ADVi3pp/issues/291)
+* **#290** - [Avoid homing when not necessary](https://github.com/andrivet/ADVi3pp/issues/290)
+* **#289** - [Travel movements during manual bed levelling significantly slower than earlier versions](https://github.com/andrivet/ADVi3pp/issues/289)
+* **#288** - [Inversion of black and white BLTouch wires not detected](https://github.com/andrivet/ADVi3pp/issues/288)
+* **#287** - [Warn if manual bed leveling is attempted while extruder is hot](https://github.com/andrivet/ADVi3pp/issues/287)
+* **#285** - [Show what triggered a hardware error](https://github.com/andrivet/ADVi3pp/issues/285)
+* **#284** - [LCD stuck dim when hardware error detected](https://github.com/andrivet/ADVi3pp/issues/284)
+* **#279** - [Enhance the beeping feature](https://github.com/andrivet/ADVi3pp/issues/279)
+* **#277** - [Raise extruder during Tuning / Extruder](https://github.com/andrivet/ADVi3pp/issues/277)
+* **#274** - [Enhanced motion during filament load](https://github.com/andrivet/ADVi3pp/issues/274)
+* **#246** - [Skew compensation implementation](https://github.com/andrivet/ADVi3pp/issues/246)
+* **#177** - [Cancel e-steps tuning](https://github.com/andrivet/ADVi3pp/issues/177)
+
+## 5.3.0 (2022-06-04)
+
+* **#214** - Troubleshooting vibrations and mechanical issues
+
+## 5.2.0 (2022-05-01)
+
+* **#278** - Hide gcode files where the file name starts with a period
+* **#276** - Files with the letter "å" in the file name do not appear correctly
+* **#21** - Implement file management
+* Change slightly the font
+
 ## 5.1.1 (2022-03-29)
 
 * **#283** - Automatic bed leveling is reporting 0 for all points
@@ -7,10 +37,10 @@
 ## 5.1.0 (2022-03-25)
 
 * Align ADVi3++ with upstream latest release of Marlin (2.0.9.3)
-* **#79** - Support for filament runout sensors
-* **#263** - Use G-Code M256 (set brightness) instead of M250 (set contrast)
-* **#268** - Fix Z height not saved and 0.1mm less than expected
 * **#271** - Fix pin #6 displayed as an output in the I/O screen
+* **#268** - Fix Z height not saved and 0.1mm less than expected
+* **#263** - Use G-Code M256 (set brightness) instead of M250 (set contrast)
+* **#79** - Support for filament runout sensors
 
 ## 5.0.3 (2022-02-27)
 
@@ -18,8 +48,8 @@
 
 ## 5.0.2 (2021-11-14)
 
-* **#260** - Fix LCD dimming
 * **#266** - Junction Deviation bug and display one more digit
+* **#260** - Fix LCD dimming
 
 ## 5.0.1 (2021-09-18)
 
