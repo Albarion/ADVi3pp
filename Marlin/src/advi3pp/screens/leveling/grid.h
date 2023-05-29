@@ -20,28 +20,36 @@
 
 #pragma once
 
-#include "../../screens/core/screen.h"
+#include "../../core/screen.h"
 
 namespace ADVi3pp {
 
 #ifdef ADVi3PP_PROBE
-//! Leveling Grid Page
-struct LevelingGrid: Screen<LevelingGrid>
-{
-private:
-    Page do_prepare_page();
-    void do_save_command();
 
-    friend Parent;
-};
-#else
 //! Leveling Grid Page
-struct LevelingGrid: Screen<LevelingGrid>
-{
+struct LevelingGrid: Screen<LevelingGrid> {
+  static constexpr Page PAGE = Page::SensorGrid;
+  static constexpr Action ACTION = Action::SensorGrid;
+
 private:
-    Page do_prepare_page();
+  bool on_enter();
+  void on_save_command();
+  void on_back_command();
+
+  friend Parent;
+};
+
+#else
+
+//! Leveling Grid Page
+struct LevelingGrid: Screen<LevelingGrid> {
+  static constexpr Page PAGE = Page::NoSensor;
+  static constexpr Action ACTION = Action::SensorGrid;
+
+private:
     friend Parent;
 };
+
 #endif
 
 extern LevelingGrid leveling_grid;

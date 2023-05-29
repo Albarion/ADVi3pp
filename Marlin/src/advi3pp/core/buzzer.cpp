@@ -81,24 +81,21 @@ uint16_t Buzzer::do_size_of() const {
 
 //! Send the buzz command to the LCD panel
 //! @param duration Duration of the sound
-void Buzzer::send_buzz_command_to_lcd()
-{
+void Buzzer::send_buzz_command_to_lcd() {
   send_buzz_command_to_lcd(get_buzz_duration());
 }
 
 //! Send the buzz command to the LCD panel
 //! @param duration Duration of the sound
-void Buzzer::send_buzz_command_to_lcd(uint8_t duration)
-{
+void Buzzer::send_buzz_command_to_lcd(uint8_t duration) {
   if(duration <= 0)
-    return;
+    duration = 1;
   WriteRegisterRequest{Register::BuzzerBeepingTime}.write_byte(duration);
 }
 
 //! Activate the LCD internal buzzer for the given duration.
 //! Note: If the buzzer is disabled, does nothing.
-void Buzzer::buzz_on_action()
-{
+void Buzzer::buzz_on_action() {
   ui.refresh_screen_timeout();
   if(!is_buzz_on_action_enabled())
     return;
@@ -106,13 +103,22 @@ void Buzzer::buzz_on_action()
   send_buzz_command_to_lcd();
 }
 
+//! Activate the LCD internal buzzer for the given duration.
+//! Note: If the buzzer is disabled, does nothing.
+void Buzzer::buzz_on_action(uint8_t duration) {
+  ui.refresh_screen_timeout();
+  if(!is_buzz_on_action_enabled())
+    return;
+
+  send_buzz_command_to_lcd(duration);
+}
+
 //! Buzz briefly when the LCD panel is pressed.
 //! Note: If buzz on press is disabled, does nothing
-void Buzzer::buzz_on_press()
-{
-    if(!is_buzz_on_press_enabled())
-        return;
-    send_buzz_command_to_lcd();
+void Buzzer::buzz_on_press() {
+  if(!is_buzz_on_press_enabled())
+    return;
+  send_buzz_command_to_lcd();
 }
 
 }

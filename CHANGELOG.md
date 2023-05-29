@@ -1,6 +1,40 @@
 # ADVi3++ Changelog
 
-## 5.4.0 (2022-07-17)
+## 5.6.0 (2023-03-19)
+
+* **#330** - [Specific sequence leads to catastrophic failure](https://github.com/andrivet/ADVi3pp/issues/330)
+* **#328** - [For some users, Homing X, Y or Z is stuck on the "Homing..." screen](https://github.com/andrivet/ADVi3pp/issues/328)
+
+## 5.5.1 (2023-01-07)
+
+* **#324** - [For some users, Load and Unload commands get stuck on Please wait screen](https://github.com/andrivet/ADVi3pp/issues/324)
+* **#320** - [BLTouch Testing: when choosing "Yes Slowly" on the red LED blinking step, the instructions are contradictory](https://github.com/andrivet/ADVi3pp/issues/320)
+
+## 5.5.0 (2022-11-02)
+
+* **#318** - [Thermal runaway error is not always displayed on the LCD screen](https://github.com/andrivet/ADVi3pp/issues/318)
+* **#317** - [G-Code M114 response breaks Octolapse](https://github.com/andrivet/ADVi3pp/issues/317)
+* **#313** - [Cancel automatic leveling](https://github.com/andrivet/ADVi3pp/issues/313)
+* **#312** - [Detect and prevent bounces](https://github.com/andrivet/ADVi3pp/issues/312)
+* **#311** - [Restore Z-offset in Sensor Settings](https://github.com/andrivet/ADVi3pp/issues/311)
+* **#310** - [Add steps in BLTouch Tuning for cases when the BLTouch is blinking red](https://github.com/andrivet/ADVi3pp/issues/310)
+* **#308** - [Update description of Print Settings pane](https://github.com/andrivet/ADVi3pp/issues/308)
+* **#307** - [Versions over 5.0.3 having issues accessing SD card files](https://github.com/andrivet/ADVi3pp/issues/307)
+* **#306** - [Fast probing with BLTouch](https://github.com/andrivet/ADVi3pp/issues/306)
+* **#293** - [BLTouch - warning on transposed black and white wires](https://github.com/andrivet/ADVi3pp/issues/293)
+* **#296** - [Manual jog controls disturb homing function, triggering "Homing failed" hardware error](https://github.com/andrivet/ADVi3pp/issues/296)
+* **#294** - [If print menu is accessed while printer is moving, it shows as if it's printing](https://github.com/andrivet/ADVi3pp/issues/294)
+* **#267** - [Live Flow Tuning](https://github.com/andrivet/ADVi3pp/issues/267)
+* **#238** - [M851 should accept all offset arguments, not just Z offset](https://github.com/andrivet/ADVi3pp/issues/238)
+* **#153** - [Graph as default view or GCode to show the graph view](https://github.com/andrivet/ADVi3pp/issues/153)
+
+## 5.4.2 (2022-08-03)
+
+* **#298** - [The computation of the Extruder Tuning is wrong](https://github.com/andrivet/ADVi3pp/issues/298)
+* **#297** - [The firmware does not take into account arguments for the M300 code](https://github.com/andrivet/ADVi3pp/issues/297)
+* **#293** - [BLTouch - warning on transposed black and white wires](https://github.com/andrivet/ADVi3pp/issues/293)
+
+## 5.4.1 (2022-07-17)
 
 * **#292** - [LCD and beeper settings are not saved or taken into account](https://github.com/andrivet/ADVi3pp/issues/292)
 
